@@ -1,5 +1,15 @@
+svg {
+}
+
 .label {
-  font-size: 15px;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont,
+               'avenir next', avenir,
+               'helvetica neue', helvetica,
+               ubuntu,
+               roboto, noto,
+               'segoe ui', arial,
+               sans-serif;
 }
 
  body {
@@ -16,6 +26,12 @@
   }
 
 .annotation path {
+  shape-rendering: crispEdges;
   stroke: #E8336D;
   fill: rgba(0,0,0,0);
 }
+
+.annotation text {
+  fill: #e91e56;
+}
+

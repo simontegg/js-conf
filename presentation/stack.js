@@ -5,28 +5,33 @@ import { map, each, min, max } from 'lodash'
 import d3Annotation from '../d3-annotation'
 import { select } from 'd3-selection'
 import svgLine from 'svg-line'
+require('../style/index.css') 
 
 const line = svgLine()  
   .x((d) => d[0])
   .y((d) => d[1])
 
-require('../style/index.css') 
+const width = 920
+const height = 800
+const radius = 25
+const padding = 10
+
 
 const layouts = [
   [
-    [100, 125, 'database'],
-    [200, 125, 'model'],
-    [200, 50, 'view'],
-    [200, 75, 'controller'],
-    [300, 75, 'client']
+    [width / 8, height / 2, 'database'],
+    [width / 4, height / 2, 'model'],
+    [width / 4, height * (3 /8), 'view'],
+    [width * (3 / 8), height * (7 / 16), 'controller'],
+    [width * (5 / 8), height * (7 / 16), 'client']
   ],
   [
-    [75, 200, 'database'],
-    [200, 200, 'model'],
-    [170, 100, 'view'],
-    [200, 300, 'controller'],
-    [300, 175, 'client']
-  ]
+    [width / 8, height / 4, 'database'],
+    [width / 4, height / 2, 'model'],
+    [width / 4, height * (3 /8), 'view'],
+    [width * (3 / 8), height * (7 / 16), 'controller'],
+    [width * (5 / 8), height * (7 / 16), 'client']
+  ],
 ]
 
 const allColors = [
@@ -43,17 +48,14 @@ const links = [
 
 const springSetting = { stiffness: 130, damping: 20 }
 
-const radius = 20
-
 class Stack extends React.Component{
   constructor() {
     super()
-    this.state = { index: 0, textLengths: [] }
+    this.state = { index: 0, textLengths: [], textHeights: [] }
     this.labels = {}
 
     this.handleKeyDown = this.handleKeyDown.bind(this)
   }
-
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
@@ -61,8 +63,13 @@ class Stack extends React.Component{
       this.labels, 
       (label) => label.node.getComputedTextLength()
     )
-  
-    this.setState({ textLengths })
+
+    const textHeights = map(
+      this.labels,
+      (label) => parseInt(window.getComputedStyle(label.node).fontSize, 10)
+    )
+
+    this.setState({ textLengths, textHeights })
   }
 
   componentWillUnmount() {
@@ -88,7 +95,8 @@ class Stack extends React.Component{
     return (
       <svg 
         id='diagram'
-        viewBox="0 0 400 400"  
+        width={width}
+        height={height}
         xmlns="http://www.w3.org/2000/svg" >      
         <defs xmlns="http://www.w3.org/2000/svg">
           <filter id="dropshadow" width='150%' height="150%">
@@ -103,20 +111,30 @@ class Stack extends React.Component{
         <g id='links'>
           {
             map(links, ([start, end], i) => {
+              const [x1, y1] = layout[start]
+              const [x2, y2] = layout[end]
+
+              const style = {
+                x1: spring(x1, springSetting),
+                x2: spring(x2, springSetting),
+                y1: spring(y1, springSetting),
+                y2: spring(y2, springSetting)
+              }
 
               return (
-                <g key={i}>
-                  <line 
-                    x1={layout[start][0]}
-                    x2={layout[end][0]}
-                    y1={layout[start][1]}
-                    y2={layout[end][1]}
-                    strokeWidth={2}
-                    stroke="black" 
-                  />
-                </g>
+                <Motion key={i} style={style}>
+                  {({x1, x2, y1, y2}) => (
+                    <line 
+                      x1={x1}
+                      x2={x2}
+                      y1={y1}
+                      y2={y2}
+                      strokeWidth={2}
+                      stroke="grey" 
+                    />
+                  )}
+                </Motion>
               )
-
             })
           }
         </g>
@@ -137,7 +155,7 @@ class Stack extends React.Component{
                       cx={tx} 
                       cy={ty} 
                       r={radius} 
-                      fill="red" />
+                      fill={allColors[i]} />
                   )}
                 </Motion >
               )
@@ -147,25 +165,45 @@ class Stack extends React.Component{
         <g id="labels" >
           {
             map(layout, ([x, y, text], i) => {
-              const textLength = this.state.textLengths[i] || 0
-              const offset = getOffset(radius + 20, x, y, cx, cy, textLength)
-
+              const l = this.state.textLengths[i] || 0
+              const h = this.state.textHeights[i] || 0
+              const [xO, yO] = getTextOffset(radius + 20, x, y, cx, cy, l, h)
+              const [
+                [x1, y1], 
+                [x2, y2], 
+                [x3, y3]] = connector(radius, x, y, cx, cy, l)
+              
+              const style = {
+                tx: spring(x, springSetting),
+                ty: spring(y, springSetting),
+                txO: spring(xO, springSetting),
+                tyO: spring(yO, springSetting),
+                tx1: spring(x1, springSetting),
+                tx2: spring(x2, springSetting),
+                tx3: spring(x3, springSetting),
+                ty1: spring(y1, springSetting),
+                ty2: spring(y2, springSetting),
+                ty3: spring(y3, springSetting)
+              }
 
               return (
-                <g 
-                  className='annotation'
-                  key={i}
-                  style={{
-                    transform: `translate3d(${offset[0]}px, ${offset[1]}px, 0)`
-                  }} >
-                  <path d={line(connector(radius, x, y, cx, cy, textLength))} />
-                   
-                  <Label 
-                    ref={(l) => { this.labels[i] = l }} 
-                    text={text} 
-                    x={x} 
-                    y={y} />
-                </g>
+                <Motion key={i} style={style} >
+                  {({tx, ty, txO, tyO, tx1, tx2, tx3, ty1, ty2, ty3}) => (
+                    <g 
+                      className='annotation'
+                      style={{
+                        transform: `translate3d(${tx}px, ${ty}px, 0)`
+                      }} >
+                      <path d={line([[tx1, ty1], [tx2, ty2], [tx3, ty3]])} />
+                       
+                      <Label 
+                        ref={(label) => { this.labels[i] = label }} 
+                        text={text} 
+                        x={xO} 
+                        y={yO} />
+                    </g>
+                  )}
+                </Motion>
               )
             })
           }
@@ -176,9 +214,8 @@ class Stack extends React.Component{
 }
 
 class Label extends React.Component{
-
   render() {
-    const { x, y, text, offset } = this.props
+    const { x, y, text } = this.props
 
     return (
       <g>
@@ -186,7 +223,7 @@ class Label extends React.Component{
           x={x}
           y={y}
           ref={(t) => this.node = t } 
-          className="label">
+          className="label san-serif">
             {text}
         </text>
       </g>
@@ -194,26 +231,25 @@ class Label extends React.Component{
   }
 }
 
-
 export default Stack
 
 function center (max, min) {
   return (max + min) / 2
 }
 
-function getOffset (size, x, y, cx, cy, textLength) {
+function getTextOffset (size, x, y, cx, cy, l, h) {
   let xOffset, yOffset
 
   if (x < cx) {
-    xOffset = -size - textLength
+    xOffset = -size - l - padding
   } else {
-    xOffset = size
+    xOffset = size + padding
   }
 
   if (y < cy) {
-    yOffset = -size
+    yOffset = -size + h
   } else {
-    yOffset = size
+    yOffset = size + h
   }
 
   return [xOffset, yOffset]
@@ -223,24 +259,24 @@ function connector (r, x, y, cx, cy, textLength) {
   let x1, y1, x2, y2, x3, y3 
 
   if (x < cx) {
-    x1 = -r - 10
+    x1 = -r
     x2 = x1 - 20
-    x3 = x2 - textLength
+    x3 = x2 - textLength - 10
   } else {
-    x1 = r + 10
+    x1 = r
     x2 = x1 + 20
-    x3 = x2 + textLength
+    x3 = x2 + textLength + 10
   }
 
   if (y < cy) {
-    y1 = -r - 10
-    y2 = y3 = x1 - 20
+    y1 = -r
+    y2 = y3 = y1 - 20
   } else {
-    y1 = r + 10
+    y1 = r
     y2 = y3 = y1 + 20
   }
 
-  return [[x1, y1], [x2, y2], [y3, y3]]
+  return [[x1, y1], [x2, y2], [x3, y3]]
 }
 
 

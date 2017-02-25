@@ -1755,7 +1755,11 @@ d3-scale@^1.0.0:
     d3-time "1"
     d3-time-format "2"
 
-d3-shape@^1.0.0:
+d3-selection:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.0.3.tgz#e63e51416172427854c1bcdfa066eb5fe872c108"
+
+d3-shape, d3-shape@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.0.4.tgz#145ee100ccbec42f8e3f1996cd05c786f79fe1c6"
   dependencies:
@@ -4045,6 +4049,10 @@ pkginfo@0.x.x:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.4.0.tgz#349dbb7ffd38081fcadc0853df687f0c7744cd65"
 
+plucker@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/plucker/-/plucker-0.0.0.tgz#2ffa24e03ab2cffa4e75adc1df70f25623c45d09"
+
 plur@^2.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/plur/-/plur-2.1.2.tgz#7482452c1a0f508e3e344eaec312c91c29dc655a"
@@ -5218,6 +5226,12 @@ surge@latest:
     tar "1.0.0"
     tar.gz "0.1.1"
     url-parse-as-address "1.0.0"
+
+svg-line:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/svg-line/-/svg-line-0.0.0.tgz#258d4d4533c6cd1a515b7e236f88514b4318ae9d"
+  dependencies:
+    plucker "0.0.0"
 
 svgo@^0.7.0:
   version "0.7.1"

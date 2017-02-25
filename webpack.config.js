@@ -4,7 +4,7 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-  devtool: "source-map",
+  devtool: "eval-source-map",
   entry: [
     "webpack-hot-middleware/client",
     "babel-polyfill",
@@ -67,4 +67,5 @@ module.exports = {
       include: path.join(__dirname, "assets")
     }]
   }
+
 };

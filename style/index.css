@@ -1,3 +1,21 @@
 .label {
   font-size: 15px;
 }
+
+ body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #EEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+  }
+
+.annotation path {
+  stroke: #E8336D;
+  fill: rgba(0,0,0,0);
+}

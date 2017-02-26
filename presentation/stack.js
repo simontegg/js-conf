@@ -26,10 +26,14 @@ class Stack extends React.Component{
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
+    this.getTextProps()
+  }
+
+  getTextProps() {
     const textLengths = reduce(
       this.labels, 
       (memo, label, id) => {
-        memo[id] = label.node.getComputedTextLength()
+        if (label) memo[id] = label.node.getComputedTextLength()
         return memo
       },
       {}
@@ -38,18 +42,28 @@ class Stack extends React.Component{
     const textHeights = reduce(
       this.labels,
       (memo, label, id) => {
-        memo[id] = parseInt(window.getComputedStyle(label.node).fontSize, 10)
+        if (label) {
+          memo[id] = parseInt(window.getComputedStyle(label.node).fontSize, 10)
+        }
         return memo
       },
       {}
     )
 
+    console.log('textLengths', textLengths)
+
     this.setState({ textLengths, textHeights })
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount')
     window.removeEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.index !== this.state.index) {
+      
+      this.getTextProps()
+    }
   }
 
   handleKeyDown(e) {
@@ -64,6 +78,7 @@ class Stack extends React.Component{
 
   render() {
     console.log(this.state, this.props)
+    this.labels = {}
     const { width, height, radius, padding, layouts, links } = this.props
     const layout = layouts[this.state.index]
     const edges = links[this.state.index]
@@ -237,6 +252,7 @@ function getTextOffset (size, x, y, cx, cy, l, h) {
 
 function connector (r, x, y, cx, cy, textLength) {
   let x1, y1, x2, y2, x3, y3 
+  console.log('textLength', textLength)
 
   if (x < cx) {
     x1 = -r

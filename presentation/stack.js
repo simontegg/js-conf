@@ -1,9 +1,6 @@
 import React from 'react'
 import { Motion, spring } from 'react-motion'
-import { map, each, min, max } from 'lodash'
-//import annotation from './annotation'
-import d3Annotation from '../d3-annotation'
-import { select } from 'd3-selection'
+import { map, each, min, max, reduce } from 'lodash'
 import svgLine from 'svg-line'
 require('../style/index.css') 
 
@@ -11,39 +8,9 @@ const line = svgLine()
   .x((d) => d[0])
   .y((d) => d[1])
 
-const width = 920
-const height = 800
-const radius = 25
-const padding = 10
-
-
-const layouts = [
-  [
-    [width / 8, height / 2, 'database'],
-    [width / 4, height / 2, 'model'],
-    [width / 4, height * (3 /8), 'view'],
-    [width * (3 / 8), height * (7 / 16), 'controller'],
-    [width * (5 / 8), height * (7 / 16), 'client']
-  ],
-  [
-    [width / 8, height / 4, 'database'],
-    [width / 4, height / 2, 'model'],
-    [width / 4, height * (3 /8), 'view'],
-    [width * (3 / 8), height * (7 / 16), 'controller'],
-    [width * (5 / 8), height * (7 / 16), 'client']
-  ],
-]
-
 const allColors = [
   '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
   '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
-]
-
-const links = [
-  [0, 1],
-  [3, 1],
-  [3, 2],
-  [4, 3]
 ]
 
 const springSetting = { stiffness: 130, damping: 20 }
@@ -59,14 +26,22 @@ class Stack extends React.Component{
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
-    const textLengths = map(
+    const textLengths = reduce(
       this.labels, 
-      (label) => label.node.getComputedTextLength()
+      (memo, label, id) => {
+        memo[id] = label.node.getComputedTextLength()
+        return memo
+      },
+      {}
     )
 
-    const textHeights = map(
+    const textHeights = reduce(
       this.labels,
-      (label) => parseInt(window.getComputedStyle(label.node).fontSize, 10)
+      (memo, label, id) => {
+        memo[id] = parseInt(window.getComputedStyle(label.node).fontSize, 10)
+        return memo
+      },
+      {}
     )
 
     this.setState({ textLengths, textHeights })
@@ -79,18 +54,24 @@ class Stack extends React.Component{
 
   handleKeyDown(e) {
     if (e.code === 'Enter') {
-      console.log('enter')
       this.setState({ index: this.state.index + 1 })
+    }
+
+    if (e.code === 'Backspace') { 
+      this.setState({ index: this.state.index - 1 })
     }
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state, this.props)
+    const { width, height, radius, padding, layouts, links } = this.props
     const layout = layouts[this.state.index]
+    const edges = links[this.state.index]
     const xs = map(layout, (node) => node[0])
     const ys = map(layout, (node) => node[1])
     const cx = center(max(xs), min(xs))
     const cy = center(max(ys), min(ys))
+    const size = radius + padding + 10
 
     return (
       <svg 
@@ -110,7 +91,7 @@ class Stack extends React.Component{
         </defs>
         <g id='links'>
           {
-            map(links, ([start, end], i) => {
+            map(edges, ([start, end], i) => {
               const [x1, y1] = layout[start]
               const [x2, y2] = layout[end]
 
@@ -140,22 +121,21 @@ class Stack extends React.Component{
         </g>
         <g id="entities" >
           {
-            map(layout, ([x, y, text], i) => {
+            map(layout, ([x, y, id]) => {
               const style = {
                 tx: spring(x, springSetting),
                 ty: spring(y, springSetting)
               }
 
               return (
-                <Motion key={i} style={style} >
+                <Motion key={id} style={style} >
                   {({tx, ty}) => (
                     <circle 
                       filter='url(#dropshadow)'
-                      key={i} 
                       cx={tx} 
                       cy={ty} 
                       r={radius} 
-                      fill={allColors[i]} />
+                      fill={allColors[id]} />
                   )}
                 </Motion >
               )
@@ -164,10 +144,10 @@ class Stack extends React.Component{
         </g>
         <g id="labels" >
           {
-            map(layout, ([x, y, text], i) => {
-              const l = this.state.textLengths[i] || 0
-              const h = this.state.textHeights[i] || 0
-              const [xO, yO] = getTextOffset(radius + 20, x, y, cx, cy, l, h)
+            map(layout, ([x, y, id, text]) => {
+              const l = this.state.textLengths[id] || 0
+              const h = this.state.textHeights[id] || 0
+              const [xO, yO] = getTextOffset(size, x, y, cx, cy, l, h)
               const [
                 [x1, y1], 
                 [x2, y2], 
@@ -187,7 +167,7 @@ class Stack extends React.Component{
               }
 
               return (
-                <Motion key={i} style={style} >
+                <Motion key={id} style={style} >
                   {({tx, ty, txO, tyO, tx1, tx2, tx3, ty1, ty2, ty3}) => (
                     <g 
                       className='annotation'
@@ -197,7 +177,7 @@ class Stack extends React.Component{
                       <path d={line([[tx1, ty1], [tx2, ty2], [tx3, ty3]])} />
                        
                       <Label 
-                        ref={(label) => { this.labels[i] = label }} 
+                        ref={(label) => { this.labels[id] = label }} 
                         text={text} 
                         x={xO} 
                         y={yO} />
@@ -241,13 +221,13 @@ function getTextOffset (size, x, y, cx, cy, l, h) {
   let xOffset, yOffset
 
   if (x < cx) {
-    xOffset = -size - l - padding
+    xOffset = -size - l - 10
   } else {
-    xOffset = size + padding
+    xOffset = size + 10
   }
 
   if (y < cy) {
-    yOffset = -size + h
+    yOffset = -size + h 
   } else {
     yOffset = size + h
   }
@@ -278,7 +258,5 @@ function connector (r, x, y, cx, cy, textLength) {
 
   return [[x1, y1], [x2, y2], [x3, y3]]
 }
-
-
 
 

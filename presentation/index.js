@@ -13,6 +13,11 @@ import preloader from "spectacle/lib/utils/preloader"
 import createTheme from "spectacle/lib/themes/default"
 import Stack from './stack'
 
+import { width, height, radius, padding } from './config'
+import { layouts, links } from './layouts'
+
+const props = { width, height, radius, padding, layouts, links }
+
 // Require CSS
 require("normalize.css");
 require("spectacle/lib/themes/default/index.css")
@@ -52,7 +57,7 @@ export default class Presentation extends React.Component {
           </ul> 
         </Slide>
         <Slide bgColor="primary">
-          <Stack />
+          <Stack {...props}  />
         </Slide>
         <Slide transition={["fade"]} bgColor="tertiary">
         </Slide>

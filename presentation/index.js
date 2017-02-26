@@ -12,11 +12,13 @@ import {
 import preloader from "spectacle/lib/utils/preloader"
 import createTheme from "spectacle/lib/themes/default"
 import Stack from './stack'
+import InterLeaving from './interleaving'
 
 import { width, height, radius, padding } from './config'
 import { layouts, links } from './layouts'
 
-const props = { width, height, radius, padding, layouts, links }
+const stackProps = { width, height, radius, padding, layouts, links }
+const interleavingProps = { width, height, padding }
 
 // Require CSS
 require("normalize.css");
@@ -57,9 +59,10 @@ export default class Presentation extends React.Component {
           </ul> 
         </Slide>
         <Slide bgColor="primary">
-          <Stack {...props}  />
+          <Stack {...stackProps}  />
         </Slide>
         <Slide transition={["fade"]} bgColor="tertiary">
+          <InterLeaving {...interleavingProps} />
         </Slide>
         <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
         </Slide>

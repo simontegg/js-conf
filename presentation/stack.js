@@ -50,8 +50,6 @@ class Stack extends React.Component{
       {}
     )
 
-    console.log('textLengths', textLengths)
-
     this.setState({ textLengths, textHeights })
   }
 
@@ -61,19 +59,15 @@ class Stack extends React.Component{
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.index !== this.state.index) {
-      
       this.getTextProps()
     }
   }
 
   handleKeyDown(e) {
-    if (e.code === 'Enter') {
-      this.setState({ index: this.state.index + 1 })
-    }
+    const index = this.state.index
 
-    if (e.code === 'Backspace') { 
-      this.setState({ index: this.state.index - 1 })
-    }
+    if (e.code === 'Enter') this.setState({ index: index + 1 })
+    if (e.code === 'Backspace') this.setState({ index: index - 1 })
   }
 
   render() {

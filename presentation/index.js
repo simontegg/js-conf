@@ -3,7 +3,9 @@ import {
   BlockQuote,
   Cite,
   Deck,
+  Fill,
   Heading,
+  Image,
   ListItem,
   List,
   Quote,
@@ -18,7 +20,7 @@ import { width, height, radius, padding } from './config'
 import { layouts, links } from './layouts'
 
 const stackProps = { width, height, radius, padding, layouts, links }
-const interleavingProps = { width, height, padding }
+const interleavingProps = { width: 1000, height, padding }
 
 // Require CSS
 require("normalize.css");
@@ -29,7 +31,9 @@ const images = {
   city: require("../assets/city.jpg"),
   kat: require("../assets/kat.png"),
   logo: require("../assets/formidable-logo.svg"),
-  markdown: require("../assets/markdown.png")
+  markdown: require("../assets/markdown.png"),
+  ygritte: require('../assets/ygritte-callbacks.jpg'),
+  ygritteYet: require('../assets/ygritte-callbacks-yet.jpg')
 };
 
 preloader(images)
@@ -64,7 +68,9 @@ export default class Presentation extends React.Component {
         <Slide transition={["fade"]} bgColor="tertiary">
           <InterLeaving {...interleavingProps} />
         </Slide>
-        <Slide transition={["fade"]} bgColor="primary" textColor="tertiary">
+        <Slide transition={["fade"]} textColor="tertiary" bgImage={images.ygritte}>
+        </Slide>
+        <Slide transition={["fade"]} textColor="tertiary" bgImage={images.ygritteYet}>
         </Slide>
         <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
           <BlockQuote>

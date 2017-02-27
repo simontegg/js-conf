@@ -1,8 +1,4 @@
-svg {
-}
-
-.label {
-  font-size: 20px;
+text {
   font-family: -apple-system, BlinkMacSystemFont,
                'avenir next', avenir,
                'helvetica neue', helvetica,
@@ -10,6 +6,22 @@ svg {
                roboto, noto,
                'segoe ui', arial,
                sans-serif;
+}
+
+.label {
+  font-size: 20px;
+}
+
+.concept {
+  font-size: 30px;
+}
+
+.grey {
+  opacity: 0.5;
+}
+
+.hidden {
+  opacity: 0;
 }
 
  body {
@@ -33,5 +45,44 @@ svg {
 
 .annotation text {
   fill: #e91e56;
+}
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:0.7s;
+  -moz-animation-duration:0.7s;
+  animation-duration:0.7s;
+}
+
+
+.blank {
+  fill-opacity: 0;
+}
+
+.blank-ability {
+  fill-opacity: 0.2
+}
+
+.ability {
+  fill-opacity: 0.4
+}
+
+.ability-understanding {
+  fill-opacity: 0.6
+}
+
+.understanding {
+  fill-opacity: 0.8;
 }
 

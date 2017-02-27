@@ -8,7 +8,8 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js",
     "lint": "eslint --ext .js,.jsx .",
     "deploy": "npm run clean & npm run build && surge -p .",
-    "start": "cross-env NODE_ENV=development node server.js"
+    "start": "cross-env NODE_ENV=development node server.js",
+    "test": "tape test/** | tap-diff"
   },
   "author": "",
   "license": "MIT",
@@ -21,7 +22,9 @@
     "react-dom": "15.4.2",
     "react-motion": "^0.4.7",
     "spectacle": "^2.0.0",
-    "svg-line": "^0.0.0"
+    "svg-line": "^0.0.0",
+    "tap-diff": "^0.1.1",
+    "tape": "^4.6.3"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

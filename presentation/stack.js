@@ -236,7 +236,7 @@ function getTextOffset (size, x, y, cx, cy, l, h) {
   }
 
   if (y < cy) {
-    yOffset = -size + h 
+    yOffset = -size - 5
   } else {
     yOffset = size + h
   }

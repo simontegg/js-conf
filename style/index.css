@@ -66,20 +66,24 @@ text {
 }
 
 
-.blank {
+.fill-opacity-0 {
   fill-opacity: 0;
 }
 
-.blank-ability {
-  fill-opacity: 0.2
+.fill-opacity-20 {
+  fill-opacity: 0.2;
 }
 
-.ability {
-  fill-opacity: 0.4
+.fill-opacity-40 {
+  fill-opacity: 0.4;
 }
 
-.ability-understanding {
-  fill-opacity: 0.6
+.fill-opacity-60 {
+  fill-opacity: 0.6;
+}
+
+.fill-opacity-80 {
+  fill-opacity: 0.8;
 }
 
 .understanding {

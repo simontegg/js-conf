@@ -1,66 +1,39 @@
 import React from 'react'
 import { Motion, spring } from 'react-motion'
-import { map, each, min, max, reduce } from 'lodash'
+import { map, each, min, max, reduce, drop, concat } from 'lodash'
 import svgLine from 'svg-line'
+
+import makeSteps from '../lib/make-steps'
+
 require('../style/index.css') 
 
 const line = svgLine()  
   .x((d) => d[0])
   .y((d) => d[1])
 
+const springSetting = { stiffness: 130, damping: 20 }
+
 const allColors = [
   '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
   '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
 ]
 
-const layouts = [
-  [
-    [100, 450, 1, 'Functions', 'blank']
-  ],
-  [
-    [100, 450, 1, 'Functions', 'blank'],
-    [200, 450, 2, 'Functions', 'blank-ability'],
-    [200, 350, 3, 'Objects', 'blank']
-  ],
-  [
-    [100, 450, 1, 'Functions', 'blank'],
-    [200, 450, 2, 'Functions', 'blank-ability'],
-    [200, 350, 3, 'Objects', 'blank'],
-    [300, 450, 4, 'Functions', 'ability'],
-    [300, 350, 5, 'Objects', 'blank-ability'],
-    [300, 250, 6, 'Assertions', 'blank'],
-  ],
-  [
-    [100, 450, 1, 'functions', 'blank'],
-    [200, 450, 2, 'functions', 'blank-ability'],
-    [200, 350, 3, 'objects', 'blank'],
-    [300, 450, 4, 'functions', 'ability'],
-    [300, 350, 5, 'objects', 'blank-ability'],
-    [300, 250, 6, 'assertions', 'blank'],
-    [400, 450, 7, 'functions', 'ability-understanding'],
-    [400, 350, 8, 'objects', 'ability'],
-    [400, 250, 9, 'assertions', 'blank-ability'],
-    [400, 150, 10, 'callbacks', 'blank']
-  ],
-  [
-    [100, 450, 1, 'functions', 'blank'],
-    [200, 450, 2, 'functions', 'blank-ability'],
-    [200, 350, 3, 'objects', 'blank'],
-    [300, 450, 4, 'functions', 'ability'],
-    [300, 350, 5, 'objects', 'blank-ability'],
-    [300, 250, 6, 'assertions', 'blank'],
-    [400, 450, 7, 'functions', 'ability-understanding'],
-    [400, 350, 8, 'objects', 'ability'],
-    [400, 250, 9, 'assertions', 'blank-ability'],
-    [400, 150, 10, 'callbacks', 'blank'],
-    [500, 450, 11, 'functions', 'understanding'],
-    [500, 350, 12, 'objects', 'ability-understanding'],
-    [500, 250, 13, 'assertions', 'ability'],
-    [500, 150, 14, 'callbacks', 'blank-ability'],
-    [500, 50, 15, 'promises', 'blank']
-  ]
+const classes = [ 
+  'fill-opacity-0',
+  'fill-opacity-20',
+  'fill-opacity-40',
+  'fill-opacity-60',
+  'fill-opacity-80'
 ]
 
+const layouts = [
+  makeSteps(1, 100, 450, 100, classes),
+  makeSteps(2, 100, 450, 100, classes),
+  makeSteps(3, 100, 450, 100, classes),
+  makeSteps(4, 100, 450, 100, classes),
+  makeSteps(5, 100, 450, 100, classes),
+  makeSteps(50, 100, 450, 100, classes)
+]
 
 const labels = [
   [
@@ -110,7 +83,6 @@ const labels = [
   ]
 ]
 
-const springSetting = { stiffness: 130, damping: 20 }
 
 class Interleaving extends React.Component{
   constructor() {
@@ -144,65 +116,65 @@ class Interleaving extends React.Component{
 
     return (
       <svg
-        style={{
-          transform: `scale(1)`
-        }}
-        id='diagram'
-        width={width}
-        height={height}
-        xmlns="http://www.w3.org/2000/svg" >      
-        <defs xmlns="http://www.w3.org/2000/svg">
-          <filter id="dropshadow" width='150%' height="150%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> 
-            <feOffset dx="-1" dy="2" result="offsetblur"/> 
-            <feMerge> 
-              <feMergeNode/>
-              <feMergeNode in="SourceGraphic"/> 
-            </feMerge>
-          </filter>
-        </defs>
-        <g id='building blocks'>
-          {
-            map(layout, ([x, y, id, text, className]) => {
-              return (
-                <g
-                  key={id}
-                  style={{
-                    transform: `translate(${x}px, ${y}px)`
-                  }} >
-                  <rect 
-                    className={className + ' fade-in'}
-                    stroke='black'
-                    strokeWidth={3}
-                    shapeRendering='geometricPrecision'
-                    fill='black'
-                    x={0}
-                    y={0}
-                    width={90}
-                    height={90} />
-                </g>
-              )
-            })
+      style={{
+        transform: `scale(1)`
+      }}
+      id='diagram'
+      width={width}
+      height={height}
+      xmlns="http://www.w3.org/2000/svg" >      
+      <defs xmlns="http://www.w3.org/2000/svg">
+      <filter id="dropshadow" width='150%' height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> 
+      <feOffset dx="-1" dy="2" result="offsetblur"/> 
+      <feMerge> 
+      <feMergeNode/>
+      <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+      </filter>
+      </defs>
+      <g id='building blocks'>
+      {
+        map(layout, ([x, y, id, className]) => {
+          return (
+            <g
+            key={id}
+            style={{
+              transform: `translate(${x}px, ${y}px)`
+            }} >
+            <rect 
+            className={className + ' fade-in'}
+            stroke='black'
+            strokeWidth={3}
+            shapeRendering='geometricPrecision'
+            fill='black'
+            x={0}
+            y={0}
+            width={90}
+            height={90} />
+            </g>
+          )
+        })
+      }
+      </g>
+      <g id='labels' >
+      {
+        map(ls, ({x, y, text, id, className}) => {
+          const style = {
+            tx: spring(x, springSetting),
+            ty: spring(y, springSetting)
           }
-        </g>
-        <g id='labels' >
-          {
-            map(ls, ({x, y, text, id, className}) => {
-              const style = {
-                tx: spring(x, springSetting),
-                ty: spring(y, springSetting)
-              }
 
-              return (
-                <Motion key={id} style={style} >
-                  {({tx, ty}) => (
-                    <Label x={tx} y={ty} text={text} className={className} />
-                  )}
-                </Motion>
-              )
-            })
-          }
-        </g>
+          return (
+            <Motion key={id} style={style} >
+            {({tx, ty}) => (
+              <Label x={tx} y={ty} text={text} className={className} />
+            )}
+            </Motion>
+          )
+        })
+      }
+      </g>
       </svg>
     )
   }
@@ -215,13 +187,13 @@ class Label extends React.Component{
 
     return (
       <g>
-        <text 
-          x={x}
-          y={y}
-          ref={(t) => this.node = t } 
-          className={className}>
-            {text}
-        </text>
+      <text 
+      x={x}
+      y={y}
+      ref={(t) => this.node = t } 
+      className={className}>
+      {text}
+      </text>
       </g>
     )
   }

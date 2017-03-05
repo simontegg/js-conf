@@ -114,67 +114,72 @@ class Interleaving extends React.Component{
     const layout = layouts[this.state.index]
     const ls = labels[this.state.index]
 
+ //   const style = {
+ //     tScale: 
+
+ //   }
+
     return (
       <svg
-      style={{
-        transform: `scale(1)`
-      }}
-      id='diagram'
-      width={width}
-      height={height}
-      xmlns="http://www.w3.org/2000/svg" >      
-      <defs xmlns="http://www.w3.org/2000/svg">
-      <filter id="dropshadow" width='150%' height="150%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> 
-      <feOffset dx="-1" dy="2" result="offsetblur"/> 
-      <feMerge> 
-      <feMergeNode/>
-      <feMergeNode in="SourceGraphic"/> 
-      </feMerge>
-      </filter>
-      </defs>
-      <g id='building blocks'>
-      {
-        map(layout, ([x, y, id, className]) => {
-          return (
-            <g
-            key={id}
-            style={{
-              transform: `translate(${x}px, ${y}px)`
-            }} >
-            <rect 
-            className={className + ' fade-in'}
-            stroke='black'
-            strokeWidth={3}
-            shapeRendering='geometricPrecision'
-            fill='black'
-            x={0}
-            y={0}
-            width={90}
-            height={90} />
-            </g>
-          )
-        })
-      }
-      </g>
-      <g id='labels' >
-      {
-        map(ls, ({x, y, text, id, className}) => {
-          const style = {
-            tx: spring(x, springSetting),
-            ty: spring(y, springSetting)
-          }
+        style={{
+          transform: `scale(1)`
+        }}
+        id='diagram'
+        width={width}
+        height={height}
+        xmlns="http://www.w3.org/2000/svg" >      
+       <defs xmlns="http://www.w3.org/2000/svg">
+         <filter id="dropshadow" width='150%' height="150%">
+           <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> 
+           <feOffset dx="-1" dy="2" result="offsetblur"/> 
+           <feMerge> 
+             <feMergeNode/>
+             <feMergeNode in="SourceGraphic"/> 
+           </feMerge>
+         </filter>
+       </defs>
+       <g id='building blocks'>
+       {
+         map(layout, ([x, y, id, className]) => {
+           return (
+             <g
+             key={id}
+             style={{
+               transform: `translate(${x}px, ${y}px)`
+             }} >
+             <rect 
+             className={className + ' fade-in'}
+             stroke='black'
+             strokeWidth={3}
+             shapeRendering='geometricPrecision'
+             fill='black'
+             x={0}
+             y={0}
+             width={90}
+             height={90} />
+             </g>
+           )
+         })
+       }
+       </g>
+       <g id='labels' >
+       {
+         map(ls, ({x, y, text, id, className}) => {
+           const style = {
+             tx: spring(x, springSetting),
+             ty: spring(y, springSetting)
+           }
 
-          return (
-            <Motion key={id} style={style} >
-            {({tx, ty}) => (
-              <Label x={tx} y={ty} text={text} className={className} />
-            )}
-            </Motion>
-          )
-        })
-      }
-      </g>
+           return (
+             <Motion key={id} style={style} >
+             {({tx, ty}) => (
+               <Label x={tx} y={ty} text={text} className={className} />
+             )}
+             </Motion>
+           )
+         })
+       }
+       </g>
       </svg>
     )
   }

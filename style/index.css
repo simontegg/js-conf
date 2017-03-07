@@ -65,6 +65,19 @@ text {
   animation-duration:0.7s;
 }
 
+.timeline-label {
+  font-size: 0.8em;
+}
+
+.timeline-time {
+  font-size: 0.7em;
+}
+
+.time-line {
+  stroke: black;
+  stroke-width: 2px;
+}
+
 
 .fill-opacity-0 {
   fill-opacity: 0;
@@ -86,7 +99,4 @@ text {
   fill-opacity: 0.8;
 }
 
-.understanding {
-  fill-opacity: 0.8;
-}
 

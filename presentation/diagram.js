@@ -83,6 +83,7 @@ class Stack extends React.Component{
     const size = radius + padding + 10
 
     return (
+      <div>
       <svg 
         id='diagram'
         width={width}
@@ -198,6 +199,14 @@ class Stack extends React.Component{
           }
         </g>
       </svg>
+      <h1 
+        style={{
+          position: 'absolute',
+          top: 30
+        }} >
+        { 'THEY WERE SIMPLER TIMES' }
+      </h1> 
+      </div>
     )
   }
 }

@@ -110,20 +110,25 @@ class Interleaving extends React.Component{
 
   render() {
     console.log(this.state, this.props)
+    const { index } = this.state
+    let scale = 1
+    let translateY = 0
+    if (index >= (layouts.length - 1)) {
+      scale = 0.12
+      translateY = 540
+    }
+
     const { width, height, radius, padding } = this.props
-    const layout = layouts[this.state.index]
-    const ls = labels[this.state.index]
+    const layout = layouts[index]
+    const ls = labels[index]
 
- //   const style = {
- //     tScale: 
-
- //   }
+    const style = { 
+      tScale: spring(scale, springSetting),
+      translateY: spring(translateY, springSetting)
+    }
 
     return (
       <svg
-        style={{
-          transform: `scale(1)`
-        }}
         id='diagram'
         width={width}
         height={height}
@@ -138,49 +143,63 @@ class Interleaving extends React.Component{
            </feMerge>
          </filter>
        </defs>
-       <g id='building blocks'>
-       {
-         map(layout, ([x, y, id, className]) => {
-           return (
-             <g
-             key={id}
-             style={{
-               transform: `translate(${x}px, ${y}px)`
-             }} >
-             <rect 
-             className={className + ' fade-in'}
-             stroke='black'
-             strokeWidth={3}
-             shapeRendering='geometricPrecision'
-             fill='black'
-             x={0}
-             y={0}
-             width={90}
-             height={90} />
-             </g>
-           )
-         })
-       }
-       </g>
-       <g id='labels' >
-       {
-         map(ls, ({x, y, text, id, className}) => {
-           const style = {
-             tx: spring(x, springSetting),
-             ty: spring(y, springSetting)
-           }
+       <Motion style={style} >
+         {({tScale, translateY}) => (
+            <g 
+              id= 'wrapper' 
+              style={{
+                transform: `translate(0px, ${translateY}px) scale(${tScale})`
+              }}>
+               <g id='building blocks'>
+                 {
+                   map(layout, ([x, y, id, className]) => {
+                     return (
+                       <g
+                         key={id}
+                         style={{
+                           transform: `translate(${x}px, ${y}px)`
+                         }} >
+                         <rect 
+                           className={className + ' fade-in'}
+                           stroke='black'
+                           strokeWidth={3}
+                           shapeRendering='geometricPrecision'
+                           fill='black'
+                           x={0}
+                           y={0}
+                           width={90}
+                           height={90} />
+                       </g>
+                     )
+                   })
+                 }
+               </g>
+               <g id='labels' >
+                  {
+                    map(ls, ({x, y, text, id, className}) => {
+                      const style = {
+                        tx: spring(x, springSetting),
+                        ty: spring(y, springSetting)
+                      }
 
-           return (
-             <Motion key={id} style={style} >
-             {({tx, ty}) => (
-               <Label x={tx} y={ty} text={text} className={className} />
-             )}
-             </Motion>
-           )
-         })
-       }
-       </g>
-      </svg>
+                      return (
+                        <Motion key={id} style={style} >
+                          {({tx, ty}) => (
+                            <Label 
+                              x={tx} 
+                              y={ty} 
+                              text={text} 
+                              className={className} />
+                          )}
+                        </Motion>
+                      )
+                    })
+                  }
+               </g>
+             </g>
+            )}
+          </Motion>
+         </svg>
     )
   }
 }

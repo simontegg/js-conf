@@ -11,15 +11,19 @@ import {
   ListItem,
   List,
   Quote,
+  S,
   Slide,
   Text } from "spectacle"
 import preloader from "spectacle/lib/utils/preloader"
 import createTheme from "spectacle/lib/themes/default"
-import Stack from './stack'
+import { map, filter } from 'lodash'
+
+import Diagram from './diagram'
 import InterLeaving from './interleaving'
+import Timeline from './timeline'
 
 import { width, height, radius, padding } from './config'
-import { layouts, links } from './layouts'
+import { layouts, links, timelineData } from './layouts'
 
 const stackProps = { width, height, radius, padding, layouts, links }
 const interleavingProps = { width: 1000, height, padding }
@@ -29,6 +33,8 @@ require("normalize.css")
 require("spectacle/lib/themes/default/index.css")
 
 const images = {
+  homer: require('../assets/homer.gif'),
+  collage: require('../assets/eda-collage2.jpg'),
   edaGroup: require('../assets/eda-group.jpg'),
   roNJosh: require('../assets/eda-group-ro-josh.jpg'),
   karateKid: require('../assets/karatekidbdcap4_original.jpg'),
@@ -54,49 +60,7 @@ export default class Presentation extends React.Component {
     return (
       <Deck transition={['fade']} theme={theme}>
 
-        <Slide 
-          transitionDuration={1} 
-          bgImage={images.edaGroup} textColor='tertiary'/>
-
-        <Slide 
-          transitionDuration={1} 
-          bgImage={images.roNJosh} 
-          textColor='tertiary' />
-
-        <Slide bgImage={images.aladdin} textColor='tertiary' >
-          <BlockQuote>
-            <Quote> Any sufficiently abstract layer is indistinguishable from magic</Quote>
-            <Cite> Scott Hanselman </Cite>
-          </BlockQuote>
-        </Slide >
-      
-        <Slide>
-          <Heading size={1} >Graduate Jobs: </Heading>
-          <ul style={{listStyle: 'none'}}> 
-            <li style={{fontSize: '4em'}}> C# / .Net </li>
-            <li style={{fontSize: '2.5em'}}> Ruby/Rails </li>
-            <li style={{fontSize: '2.5em'}}> Node </li>
-            <li style={{fontSize: '2em'}} > Frontend JavaScript </li>
-            <li style={{fontSize: '1.5em'}}> PHP </li>
-          </ul> 
-        </Slide>
-
-        <Slide bgColor="primary">
-          <Stack {...stackProps}  />
-        </Slide>
-
-        <Slide textColor='tertiary' >
-          <BlockQuote>
-            <Quote 
-              textColor='#191919'
-              textSize={50} >
-              the individual attempts to understand life
-events as systematically related .... [so that] one's present identity is thus not
-a sudden and mysterious event, but a sensible result of a life story </Quote>
-            <Cite>Gergen and Gergen, 1988</Cite>
-          </BlockQuote>
-        </Slide >
-
+        // identity
         <Slide 
           transitionDuration={1} 
           bgColor="secondary" 
@@ -125,6 +89,40 @@ a sudden and mysterious event, but a sensible result of a life story </Quote>
             />
         </Slide>  
 
+        <Slide bgImage={images.collage} bgDarken={0.7}>
+          <Heading> Challenge #1 </Heading>
+          <Heading> Different starting points</Heading>
+        </Slide>
+      
+        <Slide>
+          <Heading> Challenge #2 </Heading>
+          <Heading size={1} >Job market tech: </Heading>
+          <ul style={{listStyle: 'none'}}> 
+            <li style={{fontSize: '4em'}}> C# / .Net </li>
+            <li style={{fontSize: '2.5em'}}> Ruby/Rails </li>
+            <li style={{fontSize: '2.5em'}}> Node </li>
+            <li style={{fontSize: '2em'}} > Frontend JavaScript </li>
+            <li style={{fontSize: '1.5em'}}> PHP </li>
+          </ul> 
+        </Slide>
+
+        <Slide maxWidth={1500} bgColor="tertiary">
+          <Diagram {...stackProps}  />
+        </Slide>
+
+        <Slide textColor='tertiary' >
+          <BlockQuote>
+            <Quote 
+              textColor='#191919'
+              textSize={50} >
+              the individual attempts to understand life
+events as systematically related .... [so that] one's present identity is thus not
+a sudden and mysterious event, but a sensible result of a life story </Quote>
+            <Cite>Gergen and Gergen, 1988</Cite>
+          </BlockQuote>
+        </Slide >
+
+
         <Slide 
           transitionDuration={3000} 
           bgImage={images.karateKid} />
@@ -134,17 +132,24 @@ a sudden and mysterious event, but a sensible result of a life story </Quote>
           bgDarken={0.7}
           transitionDuration={1} 
           bgImage={images.karateKid} >
-          <Heading textSize={100} >Pedagogy of Karate Kid</Heading>
-          <br/>
-          <Appear>
-            <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
-          </Appear>
+          <Heading textSize={80} >Pedagogy of </Heading>
+          <Heading margin={30} textSize={80} >
+            <S type='italic'>The Karate Kid</S>
+          </Heading>
           <Appear>
             <Text textColor='white' textSize={45} >No lectures (✔️️)</Text>
           </Appear>
           <Appear>
             <Text textColor='white' textSize={45} >
               Practice your low-level primitives (✔️️)
+            </Text>
+          </Appear>
+          <Appear>
+            <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
+          </Appear>
+          <Appear>
+            <Text textColor='white' textSize={45} >
+              Very frustrating! (?)
             </Text>
           </Appear>
           <Appear>
@@ -162,9 +167,28 @@ a sudden and mysterious event, but a sensible result of a life story </Quote>
           <Text textColor='white' textSize={45} >
             Representation ➡️️ Understanding ➡️️ Ability
           </Text>
-
           </Appear>
+        </Slide>
 
+        <Slide maxWidth={1200} bgColor="quartenary">
+          <Heading> a new concept </Heading>
+          <Timeline />
+        </Slide>
+
+        <Slide>
+          <Heading > Read + Write </Heading>
+          <Text style={{paddingBottom: 40}} textColor='white' textSize={45} >
+            extend existing codebase
+          </Text>
+          <Heading > Write </Heading>
+          <Text textColor='white' textSize={45} >
+            user stories ➡️️ app from scratch
+          </Text>
+        </Slide>
+
+        <Slide>
+          <Heading> Teacher participation </Heading>
+          <Image src={images.homer} height={300} />
         </Slide>
 
         <Slide transition={["fade"]} bgColor="tertiary">
@@ -175,13 +199,19 @@ a sudden and mysterious event, but a sensible result of a life story </Quote>
         </Slide>
         <Slide transition={["fade"]} textColor="tertiary" bgImage={images.ygritteYet}>
         </Slide>
-        <Slide transition={["fade"]} bgColor="secondary" textColor="primary">
-          <BlockQuote>
-            <Quote>Ability precedes understanding, which precedes representation</Quote>
-            <Cite>David Chapman (stole it from Feynmen)</Cite>
-          </BlockQuote>
-        </Slide>
       </Deck>
-    );
+    )
   }
 }
+
+
+
+
+//        <Slide 
+//          transitionDuration={1} 
+//          bgImage={images.edaGroup} textColor='tertiary'/>
+//
+//        <Slide 
+//          transitionDuration={1} 
+//          bgImage={images.roNJosh} 
+//          textColor='tertiary' />

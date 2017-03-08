@@ -73,14 +73,16 @@ class Stack extends React.Component{
   render() {
     console.log(this.state, this.props)
     this.labels = {}
+    const { index } = this.state
     const { width, height, radius, padding, layouts, links } = this.props
-    const layout = layouts[this.state.index]
-    const edges = links[this.state.index]
+    const layout = layouts[index]
+    const edges = links[index]
     const xs = map(layout, (node) => node[0])
     const ys = map(layout, (node) => node[1])
     const cx = center(max(xs), min(xs))
     const cy = center(max(ys), min(ys))
     const size = radius + padding + 10
+    const title = this.props.diagramTitles[index]
 
     return (
       <div>
@@ -199,13 +201,14 @@ class Stack extends React.Component{
           }
         </g>
       </svg>
-      <h1 
+      <h2 
         style={{
           position: 'absolute',
+          textAlign: 'center',
           top: 30
         }} >
-        { 'THEY WERE SIMPLER TIMES' }
-      </h1> 
+        { title }
+      </h2> 
       </div>
     )
   }

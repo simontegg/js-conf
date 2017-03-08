@@ -23,9 +23,18 @@ import InterLeaving from './interleaving'
 import Timeline from './timeline'
 
 import { width, height, radius, padding } from './config'
-import { layouts, links, timelineData } from './layouts'
+import { layouts, links, timelineData, diagramTitles } from './layouts'
 
-const stackProps = { width, height, radius, padding, layouts, links }
+const stackProps = { 
+  width, 
+  height, 
+  radius, 
+  padding, 
+  layouts, 
+  links, 
+  diagramTitles 
+}
+
 const interleavingProps = { width: 1000, height, padding }
 
 // Require CSS
@@ -33,11 +42,20 @@ require("normalize.css")
 require("spectacle/lib/themes/default/index.css")
 
 const images = {
+  intro: require('../assets/mix-t4nt.jpg'),
+  pairing: require('../assets/josh-focus.jpg'),
+  mob: require('../assets/mob-programming.jpg'),
+  class: require('../assets/class.png'),
+  demo: require('../assets/student-demo.jpg'),
+  iamdevloper: require('../assets/iamdevloper.png'),
   homer: require('../assets/homer.gif'),
   collage: require('../assets/eda-collage2.jpg'),
+  concepts: require('../assets/concepts.jpg'),
   edaGroup: require('../assets/eda-group.jpg'),
   roNJosh: require('../assets/eda-group-ro-josh.jpg'),
   karateKid: require('../assets/karatekidbdcap4_original.jpg'),
+  cobraKai: require('../assets/cobra-kai.jpg'),
+  karateKidApp: require('../assets/karate-kid-application.jpg'),
   aladdin: require('../assets/1992-Aladdin.jpg'),
   ygritte: require('../assets/ygritte-callbacks.jpg'),
   ygritteYet: require('../assets/ygritte-callbacks-yet.jpg')
@@ -52,7 +70,7 @@ const theme = createTheme({
   quartenary: "#CECECE"
 }, {
   primary: "Montserrat",
-  secondary: "Helvetica"
+  secondary: "Montserrat"
 })
 
 export default class Presentation extends React.Component {
@@ -60,7 +78,12 @@ export default class Presentation extends React.Component {
     return (
       <Deck transition={['fade']} theme={theme}>
 
-        // identity
+        <Slide maxWidth={1500} >
+          <Heading textSize={120}>Mutable Identity</Heading>
+          <Heading textSize={120}>Challenges</Heading>
+          <Heading textSize={120}>Teaching</Heading>
+        </Slide>
+
         <Slide 
           transitionDuration={1} 
           bgColor="secondary" 
@@ -74,6 +97,18 @@ export default class Presentation extends React.Component {
               margin="20px auto"
             />
         </Slide>  
+        
+        <Slide textColor='tertiary' >
+          <BlockQuote>
+            <Quote 
+              textColor='white'
+              textSize={50} >
+              the individual attempts to understand life
+events as systematically related .... [so that] one's present identity is thus not
+a sudden and mysterious event, but a sensible result of a life story </Quote>
+            <Cite>Gergen and Gergen, 1988</Cite>
+          </BlockQuote>
+        </Slide >
 
         <Slide 
           transitionDuration={1} 
@@ -89,63 +124,71 @@ export default class Presentation extends React.Component {
             />
         </Slide>  
 
+        <Slide>
+          <Image src={images.iamdevloper} width={700} />
+        </Slide>
+        
+        <Slide maxWidth={1500} >
+          <Heading textSize={120} textColor='grey'>Mutable Identity</Heading>
+          <Heading textSize={120}>Challenges</Heading>
+          <Heading textSize={120} textColor='grey'>Teaching</Heading>
+        </Slide>
+
         <Slide bgImage={images.collage} bgDarken={0.7}>
           <Heading> Challenge #1 </Heading>
           <Heading> Different starting points</Heading>
         </Slide>
       
-        <Slide>
-          <Heading> Challenge #2 </Heading>
-          <Heading size={1} >Job market tech: </Heading>
-          <ul style={{listStyle: 'none'}}> 
-            <li style={{fontSize: '4em'}}> C# / .Net </li>
-            <li style={{fontSize: '2.5em'}}> Ruby/Rails </li>
-            <li style={{fontSize: '2.5em'}}> Node </li>
-            <li style={{fontSize: '2em'}} > Frontend JavaScript </li>
-            <li style={{fontSize: '1.5em'}}> PHP </li>
-          </ul> 
+        <Slide bgColor='primary'>
+          <Heading textColor='white' size={2} >
+            Challenge #2:
+          </Heading>
+          <Text textSize={120} textColor='white' >
+            C# / .NET
+          </Text>
+          <Text textSize={70} textColor='white' >
+            Ruby / Rails
+          </Text>
+          <Text textSize={60} textColor='white' >
+            Node
+          </Text>
+          <Text textSize={50} textColor='white' >
+            Frontend JavaScript
+          </Text>
+          <Text textSize={40} textColor='white' >
+            PHP
+          </Text>
         </Slide>
 
         <Slide maxWidth={1500} bgColor="tertiary">
           <Diagram {...stackProps}  />
         </Slide>
+        
+        <Slide bgImage={images.collage} bgDarken={0.7}>
+          <Heading> Challenge #4:</Heading>
+          <Heading>People</Heading>
+          <Heading>- harder than code</Heading>
+        </Slide>
 
-        <Slide textColor='tertiary' >
-          <BlockQuote>
-            <Quote 
-              textColor='#191919'
-              textSize={50} >
-              the individual attempts to understand life
-events as systematically related .... [so that] one's present identity is thus not
-a sudden and mysterious event, but a sensible result of a life story </Quote>
-            <Cite>Gergen and Gergen, 1988</Cite>
-          </BlockQuote>
-        </Slide >
-
-
-        <Slide 
-          transitionDuration={3000} 
-          bgImage={images.karateKid} />
+        <Slide maxWidth={1500} >
+          <Heading textSize={120} textColor='grey'>Mutable Identity</Heading>
+          <Heading textSize={120} textColor='grey' >Challenges</Heading>
+          <Heading textSize={120} >Teaching</Heading>
+        </Slide>
 
         <Slide
-          margin={0}
+          maxWidth={1500}
           bgDarken={0.7}
-          transitionDuration={1} 
           bgImage={images.karateKid} >
-          <Heading textSize={80} >Pedagogy of </Heading>
-          <Heading margin={30} textSize={80} >
-            <S type='italic'>The Karate Kid</S>
+          <Heading textColor='white' textSize={80} margin={30} >Pedagogy of <S type='italic'>The Karate Kid</S>
           </Heading>
           <Appear>
-            <Text textColor='white' textSize={45} >No lectures (✔️️)</Text>
+            <Text textColor='white' textSize={45} >No lectures, demo (✔️️)</Text>
           </Appear>
           <Appear>
             <Text textColor='white' textSize={45} >
               Practice your low-level primitives (✔️️)
             </Text>
-          </Appear>
-          <Appear>
-            <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
           </Appear>
           <Appear>
             <Text textColor='white' textSize={45} >
@@ -157,33 +200,114 @@ a sudden and mysterious event, but a sensible result of a life story </Quote>
               Solid foundations before moving on (?)
             </Text>
           </Appear>
-        </Slide>
-
-        <Slide maxWidth={2000} >
-          <Text textColor='white' textSize={45} >
-            Ability ➡️️ Understanding ➡️️ Representation
-          </Text>
           <Appear>
-          <Text textColor='white' textSize={45} >
-            Representation ➡️️ Understanding ➡️️ Ability
-          </Text>
+            <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
           </Appear>
-        </Slide>
-
-        <Slide maxWidth={1200} bgColor="quartenary">
-          <Heading> a new concept </Heading>
-          <Timeline />
-        </Slide>
-
-        <Slide>
-          <Heading > Read + Write </Heading>
-          <Text style={{paddingBottom: 40}} textColor='white' textSize={45} >
-            extend existing codebase
+          <Text style={{opacity: 0}}  textColor='white' textSize={45} >
+            Application (✔️️)
           </Text>
-          <Heading > Write </Heading>
+        </Slide>
+
+        <Slide
+          maxWidth={1500}
+          bgDarken={0.7}
+          transitionDuration={1} 
+          bgImage={images.cobraKai} >
+          <Heading textColor='white' textSize={80} margin={30} >Pedagogy of <S type='italic'>The Karate Kid</S>
+          </Heading>
+          <Text textColor='white' textSize={45} >No lectures, demo (✔️️)</Text>  
           <Text textColor='white' textSize={45} >
-            user stories ➡️️ app from scratch
+            Practice your low-level primitives (✔️️)
           </Text>
+          <Text textColor='white' textSize={45} >
+            Very frustrating! (?)
+          </Text>
+          <Text textColor='white' textSize={45} >
+            Solid foundations before moving on (?)
+          </Text>
+          <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
+          <Text style={{opacity: 0}}  textColor='white' textSize={45} >
+            Application (✔️️)
+          </Text>
+        </Slide>
+
+        <Slide
+          maxWidth={1500}
+          bgDarken={0.7}
+          transitionDuration={1} 
+          bgImage={images.karateKidApp} >
+          <Heading textColor='white' textSize={80} margin={30} >Pedagogy of <S type='italic'>The Karate Kid</S>
+          </Heading>
+          <Text textColor='white' textSize={45} >No lectures, demo (✔️️)</Text>  
+          <Text textColor='white' textSize={45} >
+            Practice your low-level primitives (✔️️)
+          </Text>
+          <Text textColor='white' textSize={45} >
+            Very frustrating! (?)
+          </Text>
+          <Text textColor='white' textSize={45} >
+            Solid foundations before moving on (?)
+          </Text>
+          <Text textColor='white' textSize={45} >Mentor-Mentee (✔️️)</Text>
+          <Text textColor='white' textSize={45} >Application (✔️️)</Text>
+        </Slide>
+
+        <Slide bgImage={images.concepts} bgDarken={0.7}  maxWidth={2000} >
+          <Heading textSize={100} margin={30} > The big assumption</Heading>
+          <Text textColor='white' textSize={45} margin={20} >
+            Representation ➡️️ Understanding ➡️️ Ability ?
+          </Text>
+          <Text textColor='white' textSize={45} >
+            Ability ➡️️ Understanding ➡️️ Representation ?
+          </Text>
+        </Slide>
+
+        <Slide bgColor='secondary'>
+          <Image src={images.class} width={600} />
+        </Slide>
+
+        <Slide bgColor='secondary'>
+          <Heading> Students ask Teacher questions </Heading>
+        </Slide>
+
+        <Slide bgColor='secondary'>
+          <Heading> Teacher asks Students questions </Heading>
+        </Slide>
+
+        <Slide maxWidth={1200} bgImage={images.intro} bgDarken={0.6}>
+          <Heading textSize={150} >9am:</Heading>
+          <Heading textSize={120} >a new concept </Heading>
+          <Heading textSize={120} style={{opacity: 0}} >a hidden heading</Heading>
+        </Slide>
+        
+        <Slide maxWidth={1200} bgImage={images.pairing} bgDarken={0.7}>
+          <Heading textSize={150} >10-12.30:</Heading>
+          <Heading textSize={120} >toy example</Heading>
+          <Heading textSize={120} >+ challenge </Heading>
+        </Slide>
+
+        <Slide maxWidth={1500} bgImage={images.mob} bgDarken={0.6}>
+          <Heading textSize={150} >2-3pm:</Heading>
+          <Heading textSize={120} >mob programming</Heading>
+          <Heading textSize={120} > || pair presentations </Heading>
+        </Slide>
+
+        <Slide maxWidth={1200} bgImage={images.pairing} bgDarken={0.6}>
+          <Heading textSize={150} >3-5pm:</Heading>
+          <Heading textSize={120}>the challenge</Heading>
+          <Heading textSize={120}>continues</Heading>
+        </Slide>
+        
+        <Slide maxWidth={1200} bgImage={images.intro} bgDarken={0.6}>
+          <Heading textSize={150} >Next day:</Heading>
+          <Heading textSize={120} >Recap</Heading>
+          <Heading textSize={120} > + next concept</Heading>
+        </Slide>
+        
+        <Slide maxWidth={1200} bgImage={images.demo} bgDarken={0.6}>
+          <Heading textSize={140} >[Wed, Thur], Fri:</Heading>
+          <Heading textSize={120} >Group projects</Heading>
+          <Heading textSize={120} style={{opacity: 0}} >a hidden heading</Heading>
         </Slide>
 
         <Slide>

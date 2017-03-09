@@ -8,12 +8,7 @@ const line = svgLine()
   .x((d) => d[0])
   .y((d) => d[1])
 
-const allColors = [
-  '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
-  '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
-]
-
-const springSetting = { stiffness: 130, damping: 20 }
+const springSetting = { stiffness: 130, damping: 25 }
 
 class Stack extends React.Component{
   constructor() {
@@ -147,7 +142,7 @@ class Stack extends React.Component{
                       cx={tx} 
                       cy={ty} 
                       r={radius} 
-                      fill={allColors[id]} />
+                      fill='#ff4081' />
                   )}
                 </Motion >
               )
@@ -205,7 +200,7 @@ class Stack extends React.Component{
         style={{
           position: 'absolute',
           textAlign: 'center',
-          top: 30
+          top: 10
         }} >
         { title }
       </h2> 

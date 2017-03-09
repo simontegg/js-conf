@@ -1,12 +1,12 @@
 import Bootcamp from 'dev-academy'
 import { dieMaybe, becomeDeveloper } from 'fate'
-import me from './me'
+import me, { makeIdentity } from './me'
 
 const bootcampExperiences = Bootcamp()
 me.lifestory = me.lifestory.concat(bootcampExperiences) 
 
 while (me.isAlive) {
-  let myIdentity = me.getLifeStory()
+  let myIdentity = me.getLifeStory().reduce(makeIdentity)
 
   if (myIdentity.canIDoIt) { // evaluates true!
     continue

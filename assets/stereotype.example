@@ -1,10 +1,10 @@
 import { developerStereotype } from 'globals'
 import { dieMaybe, becomeDeveloper } from 'fate'
 import { fuzzyEquals } from 'lodash'
-import me from './me'
+import me, { makeIdentity } from './me'
 
 while (me.isAlive) {
-  let myIdentity = me.myLifeStory()
+  let myIdentity = me.myLifeStory().reduce(makeIdentity)
   myIdentity.canIDoIt = fuzzyEquals(myIdentity, developerStereotype)
   if (myIdentity.canIDoIt) {
     continue

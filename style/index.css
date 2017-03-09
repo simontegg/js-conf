@@ -8,6 +8,8 @@ text {
                sans-serif;
 }
 
+    
+
 .label {
   font-size: 20px;
 }
@@ -39,12 +41,17 @@ text {
 
 .annotation path {
   shape-rendering: crispEdges;
-  stroke: #E8336D;
+  stroke: #141414;
   fill: rgba(0,0,0,0);
 }
 
+line {
+  stroke-width: 2px;
+  stroke: black;
+}
+
 .annotation text {
-  fill: #e91e56;
+  fill: #141414;
 }
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }

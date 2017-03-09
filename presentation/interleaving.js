@@ -1,6 +1,6 @@
 import React from 'react'
 import { Motion, spring } from 'react-motion'
-import { map, each, min, max, reduce, drop, concat } from 'lodash'
+import { map, each, min, max, reduce, drop, concat, remove } from 'lodash'
 import svgLine from 'svg-line'
 
 import makeSteps from '../lib/make-steps'
@@ -26,7 +26,14 @@ const classes = [
   'fill-opacity-80'
 ]
 
+console.log('test', makeSteps(3, 100, 450, 100, classes))
+
 const layouts = [
+  makeSteps(1, 100, 450, 100, classes),
+  remove(makeSteps(2, 100, 450, 100, classes), ([_, y]) => y >= 450),
+  remove(makeSteps(3, 100, 450, 100, classes), ([_, y]) => y >= 450),
+  remove(makeSteps(4, 100, 450, 100, classes), ([_, y]) => y >= 450),
+  remove(makeSteps(5, 100, 450, 100, classes), ([_, y]) => y >= 450),
   makeSteps(1, 100, 450, 100, classes),
   makeSteps(2, 100, 450, 100, classes),
   makeSteps(3, 100, 450, 100, classes),
@@ -40,7 +47,40 @@ const labels = [
     { x: 205, y: 500, text: 'functions', id: 1, className: 'concept' },
     { x: 135, y: 575, text: '1', id: 6, className: 'concept' },
     { x: 135, y: 575, text: '1', id: 7, className: 'concept' }
-
+  ],
+  [
+    { x: 305, y: 500, text: 'functions', id: 1, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 6, className: 'concept grey' },
+    { x: 235, y: 575, text: '2', id: 7, className: 'concept' },
+    { x: 235, y: 575, text: '2', id: 8, className: 'concept hidden' },
+  ],
+  [
+    { x: 405, y: 500, text: 'functions', id: 1, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 6, className: 'concept grey' },
+    { x: 235, y: 575, text: '2', id: 7, className: 'concept grey' },
+    { x: 335, y: 575, text: '3', id: 8, className: 'concept' },
+    { x: 335, y: 575, text: '3', id: 9, className: 'concept hidden' }
+  ],
+  [
+    { x: 505, y: 500, text: 'functions', id: 1, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 6, className: 'concept grey' },
+    { x: 235, y: 575, text: '2', id: 7, className: 'concept grey' },
+    { x: 335, y: 575, text: '3', id: 9, className: 'concept grey' },
+    { x: 435, y: 575, text: '4', id: 10, className: 'concept' },
+    { x: 435, y: 575, text: '4', id: 11, className: 'concept hidden' }
+  ],
+  [
+    { x: 605, y: 500, text: 'functions', id: 1, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 6, className: 'concept grey' },
+    { x: 235, y: 575, text: '2', id: 7, className: 'concept grey' },
+    { x: 335, y: 575, text: '3', id: 9, className: 'concept grey' },
+    { x: 435, y: 575, text: '4', id: 10, className: 'concept grey' },
+    { x: 535, y: 575, text: '5', id: 11, className: 'concept' }
+  ],
+  [
+    { x: 205, y: 500, text: 'functions', id: 1, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 6, className: 'concept' },
+    { x: 135, y: 575, text: '1', id: 7, className: 'concept' }
   ],
   [
     { x: 305, y: 500, text: 'functions', id: 1, className: 'concept' },

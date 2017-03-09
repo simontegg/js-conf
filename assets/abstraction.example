@@ -1,0 +1,23 @@
+
+// delicious sugary treat
+feathers generate service cats
+
+var cats = ['fluffy']
+
+// medium-rare
+var app = express()
+app.get('/cats', function (req, res) {
+  res.json(cats) 
+})
+
+// raw 
+var server = http.createServer(function (req, res) {
+  switch (req.method) {
+    case 'GET': 
+      res.end(JSON.stringify(cats))
+    default:
+      res.end('done')
+  }
+})
+
+

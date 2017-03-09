@@ -8,8 +8,6 @@ text {
                sans-serif;
 }
 
-    
-
 .label {
   font-size: 20px;
 }
@@ -104,6 +102,10 @@ line {
 
 .fill-opacity-80 {
   fill-opacity: 0.8;
+}
+
+pre.language-js {
+  background: black;
 }
 
 

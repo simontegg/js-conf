@@ -40,6 +40,8 @@ const stackProps = {
 
 const interleavingProps = { width: 1000, height, padding }
 const images = {
+  conversation: require('../assets/conversation.jpg'),
+  end: require('../assets/my-work-here-is-done.jpg'),
   chineseRoom: require('../assets/ChineseRoom2009_CRset.jpg'),
   intro: require('../assets/mix-t4nt.jpg'),
   pairing: require('../assets/josh-focus.jpg'),
@@ -52,9 +54,6 @@ const images = {
   concepts: require('../assets/concepts.jpg'),
   edaGroup: require('../assets/eda-group.jpg'),
   roNJosh: require('../assets/eda-group-ro-josh.jpg'),
-  karateKid: require('../assets/karatekidbdcap4_original.jpg'),
-  cobraKai: require('../assets/cobra-kai.jpg'),
-  karateKidApp: require('../assets/karate-kid-application.jpg'),
   aladdin: require('../assets/1992-Aladdin.jpg'),
   ygritte: require('../assets/ygritte-callbacks.jpg'),
   ygritteYet: require('../assets/ygritte-callbacks-yet.jpg')
@@ -85,16 +84,28 @@ const Presentation = () => (
     transition={['fade']} 
     textColor='white' 
     theme={theme}>
+    
+    <Slide maxWidth={1500} >
+      <Heading margin={50} textSize={100}>{'"Mutable Identities and Coupled Concepts"'}</Heading>
+      <Heading margin={50} textSize={50}>Teaching a FullStack JavaScript Bootcamp</Heading>
+      <Heading textSize={35}>@simontegg</Heading>
+    </Slide>
 
     <Slide maxWidth={1500} >
       <Heading textSize={100}>Mutable Identity</Heading>
       <Heading textSize={100}>Challenges</Heading>
       <Heading textSize={100}>Teaching</Heading>
     </Slide>
+    
+    <Slide maxWidth={1500} >
+      <Heading textSize={100}>Mutable Identity</Heading>
+      <Heading textColor='grey' textSize={100}>Challenges</Heading>
+      <Heading textColor='grey' textSize={100}>Teaching</Heading>
+    </Slide>
 
     <Slide 
       transitionDuration={1} 
-      bgColor='secondary'
+      bgColor='black'
       notes={`
         indulge developer stereotype;  
         squishy human problems in code; 
@@ -135,7 +146,7 @@ const Presentation = () => (
     </Slide >
 
     <Slide 
-      bgColor="secondary" 
+      bgColor='black' 
       notes={`
         add experiences;  
         extremely challenging and succeeded;  
@@ -203,6 +214,15 @@ const Presentation = () => (
       </div>
     </Slide>
 
+    <Slide maxWidth={900}>
+      <Text margin={20} textSize={50} textColor='white'>https://beepboopbot.com/</Text>
+      <Text margin={20} textSize={50} textColor='white'>https://goflat.co.nz/</Text>
+      <Text margin={20} textSize={50} textColor='white'>https://enspiral-sim-academy.firebaseapp.com/</Text>
+      <Text margin={20} textSize={50} textColor='white'>https://topoftheflops.github.io/</Text>
+
+
+    </Slide>
+
     <Slide maxWidth={1500} >
       <Heading textSize={100} textColor='grey'>Mutable Identity</Heading>
       <Heading textSize={100} textColor='grey' >Challenges</Heading>
@@ -211,9 +231,9 @@ const Presentation = () => (
     
     <Slide textColor='white' maxWidth={1500} >
       <Text textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
-      <Text style={{opacity: 0}} textSize={70} >What came first the chicken (ability) or the egg (concept) ?</Text>
-      <Text textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
-      <Text textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
+      <Text style={{opacity: 0}} textSize={70} >What came first the ability or the concept?</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
     </Slide>
     
     <Slide textColor='white' maxWidth={1500} >
@@ -221,6 +241,27 @@ const Presentation = () => (
       <Text  textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
       <Text style={{opacity: 0}} textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
       <Text style={{opacity: 0}} textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
+    </Slide>
+   
+    <Slide textColor='white' maxWidth={1500} >
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
+      <Text style={{opacity: 0}}  textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
+      <Text textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
+    </Slide>
+
+    <Slide textColor='white' maxWidth={1500} >
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
+      <Text style={{opacity: 0}}  textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
+      <Text  textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
+    </Slide>
+
+    <Slide textColor='white' maxWidth={1500} >
+      <Text textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
+      <Text textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
+      <Text  style={{opacity: 0}} textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
     </Slide>
 
     <Slide maxWidth={1200} bgImage={images.intro} bgDarken={0.6}>
@@ -261,15 +302,15 @@ const Presentation = () => (
     </Slide>
 
     <Slide>
-      <Heading> Teacher participation </Heading>
+      <Text textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
       <Image src={images.homer} height={300} />
     </Slide>
 
-    <Slide bgColor='secondary'>
+    <Slide bgColor='black'>
       <Heading> Students ask Teacher questions </Heading>
     </Slide>
 
-    <Slide bgColor='secondary'>
+    <Slide bgColor='black'>
       <Heading> Teacher asks Students questions </Heading>
     </Slide>
 
@@ -305,33 +346,52 @@ const Presentation = () => (
       </div>
     </Slide>
 
-    <Slide maxWidth={1500}>
-      <Heading textSize={120} >The Chinese Room</Heading>
-      <Image src={images.chineseRoom} width={600} />
+    <Slide textColor='white' maxWidth={1500} >
+      <Text textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
     </Slide>
 
     <Slide bgImage={images.concepts} bgDarken={0.7}  maxWidth={1500} >
       <div style={boxStyle}>
-        <Heading textSize={100} margin={30} > {'"flipped classroom"'}</Heading>
-        <Text textColor='white' textSize={50} >
-          Ability ➡️️ Understanding ➡️️ Representation ?
+        <Text textColor='white' textSize={70} >
+          Ability ➡️️ Concept ?
         </Text>
         <Heading textSize={100} margin={30} > OR </Heading>
-        <Text textColor='white' textSize={50} margin={20} >
-          Representation ➡️️ Understanding ➡️️ Ability ?
+        <Text textColor='white' textSize={70} margin={20} >
+          Concept ➡️️ Ability ?
         </Text>
       </div>
     </Slide>
 
-    <Slide bgColor='secondary'>
+    <Slide bgColor='black'>
       <Image src={images.class} width={600} />
     </Slide>
 
+    <Slide textColor='white' maxWidth={1500} >
+      <Text style={{opacity: 0}} textColor='white' textSize={70} > The mysterious case of the disappearing teacher </Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} >What came first? - the ability or the concept ?</Text>
+      <Text textColor='white' textSize={70} > Any sufficiently abstract layer is indistinguishable from magic</Text>
+      <Text style={{opacity: 0}} textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
+    </Slide>
 
+    <Slide 
+      bgColor='black' 
+      notes={`
+        
+        `}>
+        <CodePane
+          style={{
+            transform: 'scale(1.5)',
+            marginLeft: 100
+          }}
+          lang="js"
+          source={require("raw-loader!../assets/abstraction.example")}
+          margin="20px auto"
+        />
+    </Slide>  
     
 
     <Slide>
-      <Heading> Blocks vs Interleaving </Heading>
+      <Text  textColor='white' textSize={70} >{`Stack 'em high and keep 'em coming`}</Text>
     </Slide>
 
     <Slide transition={["fade"]} bgColor="tertiary"
@@ -347,6 +407,18 @@ const Presentation = () => (
     </Slide>
     <Slide transition={["fade"]} textColor="tertiary" bgImage={images.ygritteYet}>
     </Slide>
+
+    <Slide bgImage={images.conversation} bgDarken={0.5}>
+
+    </Slide>
+
+    <Slide bgImage={images.end} bgDarken={0.5}>
+      <div style={boxStyle} >
+        <Text textColor='white' textSize={70} >my work here is done</Text>
+        <Text textColor='white' margin={30}  >@simontegg</Text>
+      </div>
+    </Slide>
+
   </Deck>
 )
 

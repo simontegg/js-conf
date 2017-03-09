@@ -2,21 +2,22 @@
 // delicious sugary treat
 feathers generate service cats
 
-var cats = ['fluffy']
+var cats = ["fluffy"]
 
 // medium-rare
 var app = express()
-app.get('/cats', function (req, res) {
+app.get("/cats", function (req, res) {
   res.json(cats) 
 })
 
 // raw 
 var server = http.createServer(function (req, res) {
-  switch (req.method) {
-    case 'GET': 
-      res.end(JSON.stringify(cats))
-    default:
-      res.end('done')
+  if (req.method === "GET" && req.url === "/cats") {
+    res.writeHead(200, {"Content-Type": "application/json"})
+    res.end(JSON.stringify(cats))
+  } else {
+    res.writeHead(404, {"Content-Type": "text/plain"})
+    res.end("Not found")
   }
 })
 
